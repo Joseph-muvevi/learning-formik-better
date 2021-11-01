@@ -16,7 +16,8 @@ let initialValues = {
 		github: ""
 	},
 	phoneNumbers: ["", ""],
-	tags: [""]
+	tags: [""],
+	videos: [""]
 }
 
 let savedData = {
@@ -31,7 +32,8 @@ let savedData = {
 		github: "Johnes"
 	},
 	phoneNumbers: ["0712345678", "07234565789"],
-	tags: ["mr", "johness", "doe", "salvation man", "river man", "grasshopper eater"]
+	tags: ["mr", "johness", "doe", "salvation man", "river man", "grasshopper eater"],
+	videos: ["johnes", "channel"]
 }
 
 const validationSchema = Yup.object({
@@ -42,6 +44,9 @@ const validationSchema = Yup.object({
 	channel: Yup.string().required('Required'),
 	comments: Yup.string().required('Required'),
 	address: Yup.string().required('Required'),
+	phoneNumbers: Yup.array().required("Required"),
+	tags: Yup.array().required("Required"),
+	videos: Yup.array().required("Required")
   })
 
 const onSubmit = (values, onSubmitProps) => {
@@ -151,6 +156,36 @@ const Youtubeform = () => {
 														)}
 													</div>
 													
+												))}
+												<button type="button" onClick={() => push("")}>
+													+
+												</button>
+											</div>
+										)
+									}}
+								</FieldArray>
+							</div>
+
+							<div className="form-control">
+								<label htmlFor="videos">Videos</label>
+								<FieldArray name="videos">
+									{fieldVidArrayProps => {
+										console.log(fieldVidArrayProps)
+										const {push, remove, form} = fieldVidArrayProps
+										const {values} = form
+										const {videos} = values
+
+										return(
+											<div>
+												{videos.map((video, index) => (
+													<div key={index}>
+														<Field type="text" name={`videos[${index}]`}/>
+															{index > 0 && (
+																<button type="button" onClick={() => remove(index)}>
+																	-
+																</button>
+															)}
+													</div>
 												))}
 												<button type="button" onClick={() => push("")}>
 													+
